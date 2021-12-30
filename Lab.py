@@ -16,6 +16,17 @@ import time
 from scipy.optimize import curve_fit
 
 
+#                                                        Plot-Settings library:
+# --------------------------------------------------------------------------------------------------------------------------------
+
+plt.rc("axes", labelsize=18)
+plt.rc("xtick", labelsize=16, top=True, direction="in")
+plt.rc("ytick", labelsize=16, right=True, direction="in")
+plt.rc("axes", titlesize=18)
+plt.rc("legend", fontsize=16)
+plt.rc("figure", figsize=(7, 5), titlesize=18)
+
+
 #                                                          Functions library:
 # --------------------------------------------------------------------------------------------------------------------------------
 
@@ -165,7 +176,7 @@ def frequency(data, name, columns, save, tolerance):
         print("Frequencies found for columns {} from experiment named \"{}\" given current tolerance, {}: ".format(" and ".join(column), name, tolerance), peaks)
         print("Given the above results, the avg frequency was found to be: ", avg_peak)
         
-def plot_fit(data, name, columns, save, popts, funcs, residuals, sigma):
+def plot_fit(data, name, columns, save, popts, funcs, residuals, sigma, alpha):
     # Title for fit
     print(Lab.BOLD + Lab.UNDERLINE + "                                 ---- Fitting ----                                 " + Lab.UNDERLINE + Lab.END)
     
@@ -183,15 +194,15 @@ def plot_fit(data, name, columns, save, popts, funcs, residuals, sigma):
             # Plot data, fit and residuals
             if sigma == None:
                 axs[0].scatter(data[column[0]], data[column[1]], label = "Data", 
-                color = "red", alpha=0.5)
+                color = "red", alpha=alpha)
             elif isinstance(sigma, list):
                 axs[0].errorbar(data[column[0]], data[column[1]], yerr = sigma[i], label = "Data", 
-                color = "red", fmt="o", alpha=0.5)
+                color = "red", fmt="o", alpha=alpha)
             y_predict = funcs[i](data[column[0]], *popts[i])
             axs[0].plot(data[column[0]], y_predict, "k-", label = "Fit")
             residuals_data = data[column[1]] - y_predict
             axs[1].scatter(data[column[0]], residuals_data, 
-                color = "red", alpha=0.5)
+                color = "red", alpha=alpha)
             
             # Set x- and y-labels
             axs[0].set_xlabel(column[0].replace("_", " ").title())
@@ -215,10 +226,10 @@ def plot_fit(data, name, columns, save, popts, funcs, residuals, sigma):
             # Plot data, fit and residuals
             if sigma == None:
                 axs.scatter(data[column[0]], data[column[1]], label = "Data", 
-                color = "red", alpha=0.5)
+                color = "red", alpha=alpha)
             elif isinstance(sigma, list):
                 axs.errorbar(data[column[0]], data[column[1]], yerr = sigma[i], label = "Data", 
-                color = "red", fmt="o", alpha=0.5)
+                color = "red", fmt="o", alpha=alpha)
             y_predict = funcs[i](data[column[0]], *popts[i])
             axs.plot(data[column[0]], y_predict, "k-", label = "Fit")
             
@@ -276,6 +287,10 @@ class Lab():
     def log(self):
         _log = self._description
         print(''.join(list(_log)))
+        
+    # Show version
+    def version(self):
+        print("Version 1.0. Updated 30-12-2021")
         
     # Add note to log
     def add_note(self, note=None, line=None):
@@ -445,7 +460,7 @@ values only. \n\n'''.format(name))
             elif not self._analysis_done[name]:
                 self._description.append("\n\n  -  Tried to make an analysis, but something went wrong!")
                 
-    def fit(self, name, columns, funcs, guesses=None, sigma=None, absolute_sigma=False, method=None, residuals=False, save=False):
+    def fit(self, name, columns, funcs, guesses=None, sigma=None, absolute_sigma=False, method=None, residuals=False, save=False, alpha=1):
         # Get data and create empty lists
         data = self._experiments[name]
         popts, pcovs = [], []
@@ -473,7 +488,7 @@ values only. \n\n'''.format(name))
             pcovs.append(pcov)
         
         # Plot fits
-        plot_fit(data, name, columns, save, popts, funcs, residuals, sigma)
+        plot_fit(data, name, columns, save, popts, funcs, residuals, sigma, alpha)
         
         # Print predicted parameters and respective errors
         print(Lab.UNDERLINE + Lab.BOLD + "\n\nFit" + Lab.END + Lab.UNDERLINE + " of data from columns from experiment named \"{}\":".format(name) + Lab.END)
