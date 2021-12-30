@@ -12,7 +12,57 @@ It contains features such as,
 
 All made with the purpose of creating an simple and quick workflow for getting a quick overview of the data.
 
-## Methods
+## Methods and Properties
+
+### Methods
+**Lab.log(self):**
+ - Prints current log note containing analysis made, data added and the
+time at which the change was made
+
+**Lab.add_note(self, note=None, line=None):**
+ - Adds a note to the log on the line given. Line should be an integer
+and note should be a string.
+
+**Lab.add_experiment(self, data, name=None):**
+ - Adds a experiment to the lab instance with the given name
+containing the given data. Data should be a pandas DataFrame
+and name should be a string. If name .
+
+**Lab.update(self, data, name):**
+ - Updates the data of a experiment with the given name
+containing the given data. Data should be a pandas DataFrame
+and name should be a string.
+
+**Lab.clean(self, name, columns, pattern=None, filename=None, regex=False):**
+ - This method does two things. Firstly, if provided, the value of the variable pattern is removed
+from all values of every column. The regex bool determines if pattern will be interpreted as a regex pattern.
+Secondly it looks through every row of data from the experiment named after the name variable, and
+looks for values that it were not able to convert to a float, saves the index for that row,
+and ultimately removes all rows that couldnt be converted to a float, and then converts every column to have float
+values only. If filename is given, the data is uploaded. Filename should be a string and end on .csv.
+Columns should be a list, name and pattern should be a string and regex should be a bool.
+
+**Lab.analysis(self, name, columns=None, analysis_type="Standard", save=False, tolerance=0.5):**
+ - This method performes one of the following analysis, Standard, Bootstrap, Scatter or Frequency
+The different analysis, are showed in use in the lab_notebook_test.ipynb notebook.
+If save is True, the figure will be saved in the current directory.
+Columns should be a list of lists of columns from the DataFrame each of length two,
+name should be a string, save a bool and tolerance a float.
+
+**Lab.fit(self, name, columns, funcs, guesses=None, sigma=None, absolute_sigma=False, method=None, residuals=False, save=False, alpha=1):**
+ - This method fits a given function to data in columns and uses guesses as a guess for
+the optimal parameters. Sigma is the error for the dependent variable, which is taken
+in account if absolute_sigma is True. Method is the method for finding the optimal parameters,
+by default Least squares method. If residuals is true, then they are plottet. Alpha determines the transparency.
+If save is True, the figure will be saved in the current directory.
+The fit method are showed in use in the lab_notebook_test.ipynb notebook.
+Columns should be a list of lists of columns from the DataFrame each of length two,
+name should be a string, save a bool, funcs, sigma and guesses a list, absolute_sigma a bool
+method a string, residuals a bool and alpha a float.
+
+### Property
+**Lab.experiments:**
+ - Returns the experiments in a dictionary.
 
 ## Workflow
 The intended workflow using the Lab library is the following:
