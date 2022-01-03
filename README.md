@@ -1,7 +1,7 @@
-# Lab - Data Analytics Library
+# Lab - Data Analytics Module
 
 ## Overview
-Lab is a small library for python data analysis, made with the purpose of easing
+Lab is a small module for python data analysis, made with the purpose of easing
 the workflow of analysing data, to get a quick overview of the most important aspects of the data at hand.
 It contains features such as,
 
@@ -65,7 +65,7 @@ method a string, residuals a bool and alpha a float.
  - Returns the experiments in a dictionary.
 
 ## Workflow
-The intended workflow using the Lab library is the following:
+The intended workflow using the Lab module is the following:
 
 ```
 from Lab import *
@@ -120,6 +120,7 @@ which is accessible through the .log method.
 All of the above are illustrated in the lab_notebook_test.ipynb notebook.
 
 ## Download Guide
+To use the module, you should download the Lab.py file, import it to your working directory and follow the above workflow, to get the full use out of the module.
 
 ## References
 See my other [projects](https://fred465f.github.io/Data_Analytics_Portfolio/)!
