@@ -126,4 +126,4 @@ To use the module, you should download the Lab.py file, import it to your workin
 See my other [projects](https://fred465f.github.io/Data_Analytics_Portfolio/)!
 
 ## Version
-Version 1.0. Updated 30-12-2021.
+Version 1.0. Updated 09-02-2021.

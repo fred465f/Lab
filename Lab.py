@@ -186,7 +186,7 @@ def plot_fit(data, name, columns, save, popts, funcs, residuals, sigma, alpha):
         for i, column in enumerate(columns):
             # Make subplot at create title
             fig, axs = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
-            fig.suptitle("Plot of fit and residuals for columns ".format(" and ".join(column)))
+            fig.suptitle("Plot of fit and residuals for columns {}".format(" and ".join(column)))
             
             # Remove horizontal space between axes
             fig.subplots_adjust(hspace=0)
